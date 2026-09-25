@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -25,20 +25,20 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/signup" element={<AuthPage />} />
+        <Route path="/"               element={<HomePage />} />
+        <Route path="/login"          element={<AuthPage />} />
+        <Route path="/signup"         element={<AuthPage />} />
         <Route path="/forgot-password" element={<AuthPage />} />
         <Route path="/reset-password" element={<AuthPage />} />
-        <Route path="/mission" element={<MissionPage />} />
-        <Route path="/museum" element={<MuseumPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/stages" element={<StageMapPage />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/streak" element={<StreakPage />} />
+        <Route path="/mission"        element={<MissionPage />} />
+        <Route path="/museum"         element={<MuseumPage />} />
+        <Route path="/dashboard"      element={<DashboardPage />} />
+        <Route path="/profile"        element={<ProfilePage />} />
+        <Route path="/stages"         element={<StageMapPage />} />
+        <Route path="/leaderboard"    element={<LeaderboardPage />} />
+        <Route path="/streak"         element={<StreakPage />} />
         <Route path="/daily-challenge" element={<DailyChallengePage />} />
-        <Route path="/topics" element={<TopicsPage />} />
+        <Route path="/topics"         element={<TopicsPage />} />
         <Route path="/quiz/:subtopicId" element={<TopicQuizPage />} />
         <Route path="/quiz-results" element={<PostQuizResultsPage />} />
         <Route path="/fruit-ninja" element={<FruitNinjaQuizPage />} />
@@ -56,7 +56,10 @@ function App() {
           <div className="app-body">
             <AppSidebar />
             <main className="app-main-content">
-              <AnimatedRoutes />
+              {/* Suspense catches lazy chunks loading between route changes */}
+              <Suspense fallback={<PageLoader />}>
+                <AnimatedRoutes />
+              </Suspense>
             </main>
           </div>
         </div>
@@ -66,3 +69,4 @@ function App() {
 }
 
 export default App;
+
