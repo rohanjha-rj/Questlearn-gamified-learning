@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -57,9 +57,7 @@ function App() {
             <AppSidebar />
             <main className="app-main-content">
               {/* Suspense catches lazy chunks loading between route changes */}
-              <Suspense fallback={<PageLoader />}>
                 <AnimatedRoutes />
-              </Suspense>
             </main>
           </div>
         </div>
